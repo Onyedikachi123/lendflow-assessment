@@ -5,11 +5,11 @@
       <h3 class="name">{{ name }}</h3>
       <p class="company">Company: {{ student.company }}</p>
       <p class="company">Skil: {{ student.skill }}</p>
-      <p class="company">Average: {{ average }}</p>
+      <p class="company">Average: {{ average }}%</p>
       <div class="collapse" ref="collapse">
         <ul class="grades">
           <li v-for="(grade, i) in student.grades" :key="'grade' + i">
-            Test {{ i + 1 }}: {{ grade }}
+            Test {{ i + 1 }}: {{ grade }}%
           </li>
         </ul>
       </div>
@@ -68,6 +68,7 @@ export default {
   align-items: start;
   margin: 1rem 0;
   padding: 1rem 0;
+
   img {
     width: 60px;
     height: 60px;
@@ -75,7 +76,8 @@ export default {
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
   .name {
-    font-size: 1rem;
+    font-size: 1.5rem;
+    font-weight: 600;
   }
   .email {
     margin-top: 3px;
