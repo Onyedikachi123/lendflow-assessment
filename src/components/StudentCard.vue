@@ -76,8 +76,8 @@ export default {
   font-size: 12px;
 
   img {
-    width: 60px;
-    height: 60px;
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
     border: 1px solid rgba(0, 0, 0, 0.1);
   }
