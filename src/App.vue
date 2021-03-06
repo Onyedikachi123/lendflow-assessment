@@ -5,10 +5,16 @@
       class="filter-input"
       v-model="query"
       type="text"
-      placeholder="Filter.."
+      placeholder="Search by name"
+    />
+    <input
+      class="tag-filter"
+      v-model="tagquery"
+      type="text"
+      placeholder="Search by tag"
     />
     <div v-for="student in query ? filtered : students" :key="student.id">
-      <StudentCard :student="student" />
+      <StudentCard :student="student" style="border-bottom: 1px solid #ccc" />
     </div>
   </div>
 </template>
@@ -23,6 +29,7 @@ export default {
     filtered: [],
     loading: false,
     query: "",
+    tagquery: "",
   }),
   created() {
     this.getStudents();
@@ -85,6 +92,19 @@ body {
   padding: 0.8rem 0;
   background: none;
   margin: 20px 0 10px;
+  width: 100%;
+  transition: all 0.1s ease-in-out;
+  &:focus,
+  &.active {
+    border-bottom: 2px solid royalblue;
+  }
+}
+.tag-filter {
+  border: 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding: 0.8rem 0;
+  background: none;
+  margin: 0px 0 10px;
   width: 100%;
   transition: all 0.1s ease-in-out;
   &:focus,

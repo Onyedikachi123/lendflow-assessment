@@ -3,9 +3,13 @@
     <img :src="student.pic" alt="" />
     <div class="body">
       <h3 class="name">{{ name }}</h3>
+      <p class="email">Email: {{ student.email }}</p>
       <p class="company">Company: {{ student.company }}</p>
       <p class="company">Skil: {{ student.skill }}</p>
       <p class="company">Average: {{ average }}%</p>
+      <button>{{ tag }}</button>
+      <br />
+      <input class="input-tag" v-model="tag" placeholder="Add tag" />
       <div class="collapse" ref="collapse">
         <ul class="grades">
           <li v-for="(grade, i) in student.grades" :key="'grade' + i">
@@ -32,6 +36,7 @@ export default {
   },
   data: () => ({
     expanded: false,
+    tag: "",
   }),
   mounted() {
     this.toggle();
@@ -68,6 +73,7 @@ export default {
   align-items: start;
   margin: 1rem 0;
   padding: 1rem 0;
+  font-size: 12px;
 
   img {
     width: 60px;
@@ -85,6 +91,16 @@ export default {
   .body {
     margin-left: 1rem;
     flex-grow: 1;
+
+    p {
+      padding-top: 4px;
+    }
+
+    .input-tag {
+      border: 0px;
+      border-bottom: 1px solid #ccc;
+      padding-top: 10px;
+    }
   }
   .toggle {
     padding: 0.3rem 0.5rem;
