@@ -7,9 +7,18 @@
       <p class="company">Company: {{ student.company }}</p>
       <p class="company">Skil: {{ student.skill }}</p>
       <p class="company">Average: {{ average }}%</p>
-      <button>{{ tag }}</button>
+      <div class="tags">
+        <div v-for="(tag, i) in student.tags || []" :key="tag + i" class="tag">
+          {{ tag }}
+        </div>
+      </div>
       <br />
-      <input class="input-tag" v-model="tag" placeholder="Add tag" />
+      <input
+        @keydown.enter="addTag"
+        class="input-tag"
+        v-model="tag"
+        placeholder="Add tag"
+      />
       <div class="collapse" ref="collapse">
         <ul class="grades">
           <li v-for="(grade, i) in student.grades" :key="'grade' + i">
@@ -54,6 +63,11 @@ export default {
         collapse.style.height = 0;
       }
     },
+    addTag(e) {
+      if (!this.tag) return;
+      this.$emit("tag", this.tag);
+      this.tag = "";
+    },
   },
   computed: {
     name() {
@@ -74,6 +88,7 @@ export default {
   margin: 1rem 0;
   padding: 1rem 0;
   font-size: 12px;
+  border-bottom: 1px solid #ccc;
 
   img {
     width: 80px;
@@ -99,7 +114,7 @@ export default {
     .input-tag {
       border: 0px;
       border-bottom: 1px solid #ccc;
-      padding-top: 10px;
+      padding: 0.5rem 0;
     }
   }
   .toggle {
@@ -121,6 +136,22 @@ export default {
   .collapse {
     transition: all 0.2s ease-in-out;
     overflow: hidden;
+  }
+}
+
+.tag {
+  &s {
+    width: 100%;
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  padding: 0.5rem 0.8rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin-bottom: 5px;
+  & + & {
+    margin-left: 5px;
   }
 }
 </style>

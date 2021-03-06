@@ -13,8 +13,11 @@
       type="text"
       placeholder="Search by tag"
     />
-    <div v-for="student in query ? filtered : students" :key="student.id">
-      <StudentCard :student="student" style="border-bottom: 1px solid #ccc" />
+    <div
+      v-for="student in query || tagquery ? filtered : students"
+      :key="student.id"
+    >
+      <StudentCard :student="student" @tag="handleAddTag(student, $event)" />
     </div>
   </div>
 </template>
@@ -40,19 +43,41 @@ export default {
       try {
         const { data } = await this.$http.get(`/assessment/students`);
         this.students = data.students;
-        console.log(this.students);
       } catch (error) {
         console.log(error);
       }
       this.loading = false;
     },
-    filter() {},
+    handleAddTag(student, value) {
+      this.students = this.students.map((s) => {
+        if (s.id === student.id)
+          return {
+            ...s,
+            tags: [...(s.tags || []), value],
+          };
+        else return s;
+      });
+      console.log(student, value);
+    },
   },
   watch: {
     query(value) {
       if (value) {
         this.filtered = this.students.filter((student) => {
           return `${student.firstName} ${student.lastName}`
+            .toLowerCase()
+            .includes(value.toLowerCase());
+        });
+      } else {
+        this.filtered = [];
+      }
+    },
+    tagquery(value) {
+      if (value) {
+        this.filtered = this.students.filter((student) => {
+          console.log((student.tags || []).join(", ").includes());
+          return (student.tags || [])
+            .join(", ")
             .toLowerCase()
             .includes(value.toLowerCase());
         });
